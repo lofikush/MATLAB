@@ -1,0 +1,26 @@
+FILE 1:
+%Find the max and min of y=-(x-3)^2 +10
+% doc min, and searchbar
+
+clc, clearvars, close all %close old figures
+
+x = linspace(0,5,100); %5/99, .0505 increments
+y = (-(x-3).^2) +10;
+
+%plot(x,y,'*');
+
+%FIND THE MAX Y VAL AND ITS X VALUE
+[maxVal, I] = max(y) %maxVal = 9.996 and I=60 (the index)
+x_maxVal = x(I)
+
+
+FILE 2:
+%Find value of y=-(x-3)^2 +10 given x
+% doc min, and searchbar
+
+clc, clearvars, close all %close old figures
+
+x = linspace(0,5,100); 
+y = @(x) (-(x-3).^2) +10; %anonmous functions, create a f(x) to put in x values
+
+y(18.9)
