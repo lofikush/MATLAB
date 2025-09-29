@@ -13,6 +13,7 @@ stop = 75;
 
 
 FILE 2
+%[out put, output], (input, input)
 function [zFinal, counterr] = countFUN(startF, stopF)
 
 counter=0;
