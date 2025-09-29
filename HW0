@@ -1,0 +1,29 @@
+FILE 1:
+clc, clearvars, close all
+
+%Create a 7x7 matrix and a 7x1 vector
+A = rand(7)
+x = rand(7,1)
+
+%Call function
+[product] = multA(A,x);
+
+% Display the result
+disp('The product of A and x using the function is:');
+disp(product);
+
+%Check if function works
+manualProduct= A*x;
+if isequal(product, manualProduct)
+    disp('The function multA works correctly.');
+    manualProduct
+else
+    disp('The function doesnt work');
+end
+
+FILE 2:
+function [product] = multA(A, x)
+
+
+product = A*x;
+end
