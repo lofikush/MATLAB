@@ -21,6 +21,12 @@ else
     disp('The function doesnt work');
 end
 
+
+
+
+
+
+
 FILE 2:
 function [product] = multA(A, x)
 
