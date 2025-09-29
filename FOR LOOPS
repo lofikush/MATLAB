@@ -1,0 +1,54 @@
+clc, clearvars, close all
+
+% Start timer for performance measurement
+tic
+
+% Generate 1 million random integers between 1 and 5
+A = randi(5, 1, 1000000); 
+
+% A==3 creates a logical array where true indicates presence of 3
+% sum() counts the number of true values (i.e., number of 3's)
+counter = sum(A == 3);
+
+% Check if at least 20% of the numbers are 3's
+if counter >= 0.2 * length(A)
+    disp('wow!')
+end
+
+% Record and store elapsed time
+timeForIf = toc
+
+
+
+
+
+
+
+% Section 2: For Loop Approach
+% Compare performance of iterative method vs vectorized approach
+% Start timing the for loop execution
+tic
+
+% Generate 1 million random integers between 1 and 5
+A = randi(5, 1, 1000000); 
+
+% Initialize counter for number of 3's found
+counter = 0;
+
+% Iterate through each element in the array
+for i = 1:length(A)
+    % Check if current element equals 3
+    if A(i) == 3
+        % Increment counter when 3 is found
+        counter = counter + 1;
+    end
+end
+
+% Display message if at least 3 occurrences found
+% (Note: This threshold seems low for 1M elements - may want to adjust)
+if counter >= 3
+    disp("WOW!")
+end
+
+% Display elapsed time for for loop approach
+timeForLoop= toc
