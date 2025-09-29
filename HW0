@@ -1,68 +1,68 @@
-FILE 1:
+MAIN:
 clc, clearvars, close all
 
-%Create a 7x7 matrix and a 7x1 vector
-A = rand(7)
-x = rand(7,1)
+%Define parameters
+%A=mxn or 7x7. x=nx1 or 7x1
+A = rand(7,7);
+x = rand(7,1);
 
-%Call function
-[product] = multA(A,x);
+tic
+bNoFun = A*x
+timeNoFun = toc;
 
-% Display the result
-disp('The product of A and x using the function is:');
-disp(product);
+tic
+bWithFun = AxFun(A,x);
+timeWithFun = toc;
 
-%Check if function works
-manualProduct= A*x;
-if isequal(product, manualProduct)
-    disp('The function multA works correctly.');
-    manualProduct
-else
-    disp('The function doesnt work');
+bWithFun
+
+
+
+if bWithFun~=bNoFun
+    error("Function does NOT work, ending now")
 end
 
 
+disp("Depening on how you want to count, and using m = m_A and n=n_A=m_x=length of x, " + ...
+    "the ammount of FLOPS is 2nm-m OR 2nm (if you want to count adding by 0 in the very first instance of enetering the inner loop each time)")
+
+fprintf('Built-in time: %.6f seconds\nCustom function time: %.6f seconds\nCUSTOM WINS', timeNoFun, timeWithFun);
 
 
 
 
 
-FILE 2:
-function [product] = multA(A, x)
 
 
-product = A*x;
+
+
+
+FUNCTION:
+function [b] = AxFun(A, x)
+
+%Get # of rows and cols of A
+[m_A,n_A] = size(A);
+
+%Get # of rows of x
+m_x = length(x);
+
+%Check if rows of x = cols of A
+if m_x ~= n_A
+    error("Multipcation is NOT possible. Ending program");
 end
+    
+% Initialize output vector as 7x1
+b = zeros(m_A, 1);
 
+% Perform matrix-vector multiplication using 2 nested loops
+for i = 1:m_A
 
-
-
-
-chat 
-
-function y = matrix_vector_mult(A, x)
-% MATRIX_VECTOR_MULT Matrix-vector multiplication using nested loops
-% Inputs:
-%   A - m x n matrix
-%   x - n x 1 vector
-% Output:
-%   y - m x 1 vector (Ax)
-
-% Get dimensions of A
-[m, n] = size(A);
-
-% Check if x has compatible dimensions
-if length(x) ~= n
-    error('Dimension mismatch: number of columns in A must equal length of x');
-end
-
-% Initialize output vector
-y = zeros(m, 1);
-
-% Perform matrix-vector multiplication using nested loops
-for i = 1:m
-    for j = 1:n
-        y(i) = y(i) + A(i,j) * x(j);
+    for j = 1:n_A %NOTE: x(j) works since n_A=m_x
+        b(i) = b(i) + A(i,j)*x(j);
     end
+   
 end
+
+
+
 end
