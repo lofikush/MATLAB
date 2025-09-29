@@ -33,3 +33,36 @@ function [product] = multA(A, x)
 
 product = A*x;
 end
+
+
+
+
+
+chat 
+
+function y = matrix_vector_mult(A, x)
+% MATRIX_VECTOR_MULT Matrix-vector multiplication using nested loops
+% Inputs:
+%   A - m x n matrix
+%   x - n x 1 vector
+% Output:
+%   y - m x 1 vector (Ax)
+
+% Get dimensions of A
+[m, n] = size(A);
+
+% Check if x has compatible dimensions
+if length(x) ~= n
+    error('Dimension mismatch: number of columns in A must equal length of x');
+end
+
+% Initialize output vector
+y = zeros(m, 1);
+
+% Perform matrix-vector multiplication using nested loops
+for i = 1:m
+    for j = 1:n
+        y(i) = y(i) + A(i,j) * x(j);
+    end
+end
+end
