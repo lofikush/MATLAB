@@ -1,0 +1,36 @@
+clc, clearvars, close all
+
+%based upon y=sin(x) what percent of y values are >.8 for x=0 to 10?
+
+% x = 0:0.01:10; % Define the range of x values
+% y = sin(x); % Calculate y values based on the sine function
+% percentAboveThreshold = sum(y > 0.8) / length(y) * 100; % Calculate the percentage of y values greater than 0.8
+
+
+x= linspace(0,10,10000000);
+y = sin(x); %elemnt operation auto
+check = 0;
+
+figure(1)
+plot(x,y,'*')
+hold on
+plot([0,10],[check,check], 'r') %graph a straight line y=.8 for x=0 to 10
+
+
+logArr= y>check;
+
+percent = sum(logArr)/length(y) *100 %LENGTH(Y) RETURNS the LARGEST DIMINISON in a mxn matrix
+
+
+
+
+
+
+%HELPFUL
+% A=ones(1,10) %create a matrix all ones 1x10
+% 
+% sum(A) %will SUM all entires in array
+% 
+% logArr = A>0 %RETRUN A logical array, will perform elemnet operations on each entry auto,
+% 
+% res = sum(logArr) %will return 10 which means all true
