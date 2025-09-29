@@ -1,0 +1,27 @@
+FILE 1
+%While loops
+clc, clearvars, close all
+
+start = 100;
+stop = 75;
+
+[finalValue, counter] = countFUN(start, stop)
+
+
+
+
+
+
+FILE 2
+function [zFinal, counterr] = countFUN(startF, stopF)
+
+counter=0;
+
+while startF>stopF
+    startF = startF-1;
+    counter = counter + 1;
+end
+
+zFinal=startF;
+counterr=counter;
+end
