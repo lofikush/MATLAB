@@ -1,68 +1,106 @@
-MAIN:
+Question 3:
+Main File
+%%QUESTION 3
 clc, clearvars, close all
-
 %Define parameters
 %A=mxn or 7x7. x=nx1 or 7x1
 A = rand(7,7);
 x = rand(7,1);
-
 tic
 bNoFun = A*x
 timeNoFun = toc;
-
 tic
 bWithFun = AxFun(A,x);
 timeWithFun = toc;
-
 bWithFun
-
-
-
 if bWithFun~=bNoFun
-    error("Function does NOT work, ending now")
+   error("Function does NOT work, ending now")
 end
-
-
 disp("Depening on how you want to count, and using m = m_A and n=n_A=m_x=length of x, " + ...
-    "the ammount of FLOPS is 2nm-m OR 2nm (if you want to count adding by 0 in the very first instance of enetering the inner loop each time)")
-
+   "the ammount of FLOPS is 2nm-m OR 2nm (if you want to count adding by 0 in the very first instance of enetering the inner loop each time)")
 fprintf('Built-in time: %.6f seconds\nCustom function time: %.6f seconds\nCUSTOM WINS', timeNoFun, timeWithFun);
 
-
-
-
-
-
-
-
-
-
-FUNCTION:
+Function File
 function [b] = AxFun(A, x)
-
 %Get # of rows and cols of A
 [m_A,n_A] = size(A);
-
 %Get # of rows of x
 m_x = length(x);
-
 %Check if rows of x = cols of A
 if m_x ~= n_A
-    error("Multipcation is NOT possible. Ending program");
+   error("Multipcation is NOT possible. Ending program");
 end
-    
+  
 % Initialize output vector as 7x1
 b = zeros(m_A, 1);
-
 % Perform matrix-vector multiplication using 2 nested loops
 for i = 1:m_A
-
-    for j = 1:n_A %NOTE: x(j) works since n_A=m_x
-        b(i) = b(i) + A(i,j)*x(j);
-    end
-   
+   for j = 1:n_A %NOTE: x(j) works since n_A=m_x
+       b(i) = b(i) + A(i,j)*x(j);
+   end
+ 
+end
 end
 
 
 
+
+
+
+Question 4:
+main2
+clc, clearvars, close all
+%Create Matrices to multiple
+A = rand(8, 5);
+B = rand(5, 3);
+%Call function
+tic
+ABFun = matrixMultFun (A,B);
+myFunTime = toc;
+%Check answer with built in Function
+tic
+AB= A*B
+builtInTime = toc;
+ABFun
+if abs(ABFun-AB) < .0000000001 %I guess built in function uses a different order of operations DIFF from my 3 loops, which affects the EXACT value?
+   fprintf("IT WORKS!!!!\n")
+else
+   fprintf("Try again :(\n")
 end
+%Just for fun, measure time
+if builtInTime>myFunTime
+   fprintf("I win")
+else
+   fprintf("Im inaccuarte AND slow :(")
+end
+%Answer part B
+fprintf("\n\nThe total FLOPS (given A is mxn and B is nxp) is either 2nmp or 2nmp-mp \n" + ...
+   "depending on wheather or not you want to count +0 as a operation in the inner most loop")
+
+
+func
+function [AB] = matrixMultFun(A,B)
+%Check if Mutilpcation is possible
+[rowsA, colsA] = size(A);
+[rowsB, colsB] = size(B);
+if colsA ~= rowsB
+   error("Multipcation is NOT possible. Exiting now.");
+end
+COMMON = colsA; %Or rowsB; uness. here but for visual Ill create a new variable
+AB = zeros(rowsA,colsB);
+for i = 1:colsB %WHEN to switch columns of AB
+   for j = 1:rowsA %WHEN to switch rows of AB
+       for k = 1:COMMON %WHEN to move common ammount of times
+           AB(j,i) = AB(j,i) + A(j,k)*B(k,i);
+       end
+   end
+end
+end
+
+
+
+
+
+
+
+
