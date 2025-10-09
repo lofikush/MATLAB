@@ -1,0 +1,49 @@
+Lx=b, foward sub algo:
+function x = forwardSubstitution(L, b)
+    % function (syntax to declare a function)
+    % x - output variable
+    % forward_substitution - The function name  
+    % (L,b) - input variables
+    %
+    % Solve Lx = b for x, where L is lower triangular
+    
+    n = length(b);  
+    x = zeros(n, 1);
+    
+    for i = 1:n
+        % Start with b_i
+        x(i) = b(i);
+        
+        % Subtract sum of L(i,j)*x_j for j=1 to i-1
+        for j = 1:i-1
+            x(i) = x(i) - L(i,j) * x(j);
+        end
+        
+        % Divide by diagonal element
+        x(i) = x(i) / L(i,i);
+    end
+
+
+
+end %function end
+
+
+Ux=b, backsub algo:
+function x = backwardSubstitution(U, b)
+    n = length(b);
+    x = zeros(n, 1);  % ← CRITICAL: Initialize!
+    
+    for i = n:-1:1
+        x(i) = b(i);
+        for j = i+1:n
+            x(i) = x(i) - U(i,j) * x(j);  % ← With semicolon to suppress output
+        end
+        x(i) = x(i) / U(i,i);
+    end
+end
+
+
+
+Algorithm	Matrix Type	Loop Direction	Summation Bounds	FLOPs
+Forward Sub	Lower Triangular	i = 1 → n	j = 1 → i-1	O(n²)
+Backward Sub	Upper Triangular	i = n → 1	j = i+1 → n	O(n²)
