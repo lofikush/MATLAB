@@ -1,0 +1,41 @@
+%Goal of code: To factor A and output its LU.
+clc,clearvars
+
+% Set n=3
+n = 3;
+
+% Create random n×n matrix A
+% Create a copy of A
+disp("A before:")
+A = [1 2 3; 4 5 6; 7 8 9]
+L=eye(n);
+
+for k=1:n-1 
+    % k= What column Im starting on
+
+    for i =k+1:n 
+        % i= What row im starting off (below pivot)
+        % K is constant
+        
+        L(i,k)= A(i,k)/A(k,k); %Get my factors for L for that whole k column AFTER performing row operations below each time
+
+        for j=k:n 
+            % Perfom row operation
+            % j = what column im in each time til i reach the end
+            % I and K are constants
+
+            A(i,j) = A(i,j) - L(i,k)*A(k,j); %Notice how A(I,j) is RIGHT BELOW A(K,j)
+
+        end
+    end
+end
+
+U = A;
+disp("A/U after:")
+U
+
+disp("L after:")
+L
+
+disp("L*U:")
+B=L*U
