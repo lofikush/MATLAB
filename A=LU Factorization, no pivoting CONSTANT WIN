@@ -17,7 +17,7 @@ for k=1:n-1
         % i= What row im starting off (below pivot)
         % K is constant
         
-        L(i,k)= A(i,k)/A(k,k); %Get my factors for L for that whole k column AFTER performing row operations below each time
+        L(i,k)= A(i,k)/A(k,k); %Get my factors for L for that whole k column AFTER performing row operations below each time. GET ONE FACTOIR AND IMDEMIATLY ENTER 3RD LOOP
         A(i,k)=0; %Because we know that will have to be zero
 
         for j=k+1:n %Start off with k+1 because we made other entry zero already
