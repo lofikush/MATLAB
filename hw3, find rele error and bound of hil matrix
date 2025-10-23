@@ -1,0 +1,58 @@
+%start fresh
+clc; clearvars;
+delete('hw3_output.txt');
+diary('hw3_output.txt')
+
+% Declare A and b
+A = hilb(10);
+b = ones(10,1);
+
+% Create a small change (epsilon) in b, call that b_hat
+epsilon = 1e-5;
+b_hat = b;
+b_hat(10) = b_hat(10) + epsilon;
+
+% Given Ax = b → solve for x (perfect b)
+x = A\b;
+fprintf('x:\n');
+disp(x);
+
+% Given A*x_hat = b_hat → solve for x_hat (perturbed b)
+x_hat = A\b_hat;
+fprintf('x_hat:\n');
+disp(x_hat);
+
+% Calculate the error in x, relative errors in x and b
+error_in_x = norm(x_hat-x, 2); %||x_hat-x||_2 = ||x-x_hat||_2 = ||x_delta||_2
+relE_x = error_in_x / norm(x, 2);
+fprintf("relE_x: %.6f\n", relE_x);
+
+relE_b = norm(b_hat - b, 2) / norm(b, 2);
+fprintf("relE_b: %f\n", relE_b);
+
+% Find condition number K2(A) and theoretical error bound
+cond_num_A = cond(A, 2);
+relE_x_BOUND = cond_num_A * relE_b;
+fprintf("relE_x_BOUND: %f\n", relE_x_BOUND);
+
+%Print relE_X inequality
+fprintf("INEQUALITY: relE_x=%f =< %f\n", relE_x, relE_x_BOUND);
+
+
+
+% Compare amplification
+factorL = relE_x / relE_b;
+larger = "such that relE_x is larger by a factor of";
+
+            %factorS = relE_b/relE_x;
+            %smaller = "such that relE_x is smaller by a factor of";
+
+if factorL < 3
+    fprintf('System is well-conditioned.\n');
+elseif factorL < 20
+    fprintf('System is moderately ill-conditioned.\n');
+else
+    fprintf('System is severely ill-conditioned, %s %.2f (relE_b*factor = relE_x)\n', larger, factorL);
+end
+
+diary off
